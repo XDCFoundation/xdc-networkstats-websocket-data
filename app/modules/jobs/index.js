@@ -7,4 +7,10 @@ export default class JobController {
       lhtWebLog('monitorMeter', 'Job Failed', err, 'developer', httpConstants.LOG_LEVEL_TYPE.ERROR)
     )
   }
+
+  static async updateDailyActiveNodes () {
+    await BLManager.monitorMeters().catch((err) =>
+      lhtWebLog('monitorMeter', 'Job Failed', err, 'developer', httpConstants.LOG_LEVEL_TYPE.ERROR)
+    )
+  }
 }
