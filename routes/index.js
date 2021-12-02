@@ -13,6 +13,7 @@ module.exports = (app) => {
     app.get('/', (req, res) => res.send("Working"));
     app.post('/node', new TestModule().addNode);
     app.get('/node', new TestModule().getNode);
+    app.get('/test', new TestModule().testSocket);
 
     // app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
 };
