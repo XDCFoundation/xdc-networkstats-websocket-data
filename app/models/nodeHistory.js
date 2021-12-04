@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const nodeHistorySchema = new mongoose.Schema({
-    day: { type: Number }, 
+    addedOn: {type: Number}, 
     nodes: {type: Number} 
   })
    

@@ -1,6 +1,6 @@
 import Node from "../../models/nodeHistory";
-import Websocket from '../../service/webSocket'
 
+const sortJsonArray = require('sort-json-array');
 const W3CWebSocket = require('websocket').w3cwebsocket;
 let test = {};
 let nodes = 0;
@@ -14,7 +14,9 @@ export default class Manger {
         
     getNode = async () => {
         const nodeData = await Node.findData();
-        return nodeData;
+        const data = nodeData;
+        sortJsonArray(data, 'addedOn','des');
+        return (data.slice(0,7));
     }
 
     testSocket = async () => {
