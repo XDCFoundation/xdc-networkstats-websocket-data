@@ -23,7 +23,7 @@ class Server {
         console.log(Config.BASE_URL+Config.PORT);
 
         const socketIo = socket(serverInstance, { path: '/stats-data'}, {cors: {
-                origin: Config.BASE_URL+Config.PORT, //'http://localhost:3005',
+                origin: Config.BASE_URL, //'http://localhost:3005',
                 methods: ["GET", "POST"],
                 allowedHeaders: ["*"],
                 credentials: true
