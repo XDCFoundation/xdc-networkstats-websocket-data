@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
 const nodeHistorySchema = new mongoose.Schema({
-    day: { type: String },
-    nodeLength: {type: Number}
+    addedOn: {type: Number}, 
+    nodes: {type: Number} 
   })
-  
+   
   nodeHistorySchema.method({
     saveData: async function () {
       return this.save()
@@ -28,4 +28,4 @@ const nodeHistorySchema = new mongoose.Schema({
       return this.aggregate(findObj)
     }
   })
-  export default mongoose.model('Node History', nodeHistorySchema)
+  export default mongoose.model('node-history', nodeHistorySchema)

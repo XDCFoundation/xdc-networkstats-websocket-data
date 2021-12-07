@@ -5,11 +5,15 @@ import * as ValidationManger from "../middleware/validation";
 import TestModule from "../app/modules/testModule";
 import {stringConstants} from "../app/common/constants";
 
-module.exports = (app) => {
-    app.get('/', (req, res) => res.send(stringConstants.SERVICE_STATUS_HTML));
+const express = require('express');
 
-    /**
-     * route definition
-     */
-    app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
+const Node = require("../app/models/nodeHistory");
+module.exports = (app) => {
+    app.use(express.json());
+    app.get('/', (req, res) => res.send("Working"));
+    app.post('/node', new TestModule().addNode);
+    app.get('/node', new TestModule().getNode);
+    app.get('/test', new TestModule().testSocket);
+
+    // app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
 };
