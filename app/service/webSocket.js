@@ -1,29 +1,19 @@
-
-const W3CWebSocket = require('websocket').w3cwebsocket;
+import Primus from 'primus';
+import PrimusEmit from 'primus-emit';
+import Config from '../../config';
+// const W3CWebSocket = require('websocket').w3cwebsocket;
 
 let test = {};
 let nodes = 0;
 
-class Socket {
-async socketConnection() {
-  const client = new W3CWebSocket(
-    "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
-  );
+export default class WebSocketService {
+static socketConnection(serverInstance) {
+  const primus = new Primus(serverInstance, { transformer: "websockets", parser: 'JSON'})
+  primus.plugin('emit', PrimusEmit);
+  let Socket = primus.Socket;
 
-    client.onmessage = async (event) => {
-      let msg = JSON.parse(event.data);
-      if (msg.action === "stats") {
-        if (msg.data.id in test) {
-          return;
-        } else {
-          test[msg.data.id] = msg.data.stats.active;
-          nodes = Object.keys(test).length;
-          return Promise.resolve(nodes);
-        }
-      }
-    };
-} 
+  return new Socket(Config.WS_URL);
+}
 }
 
-module.exports = Socket
 
