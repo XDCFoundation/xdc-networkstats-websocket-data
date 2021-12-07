@@ -7,12 +7,16 @@ let obj = {};
 
 export default class BLManager {
   static async updateDailyActiveNodes() {
-    const client = new W3CWebSocket(
-      "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
-    );
+    // const client = new W3CWebSocket(
+    //   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
+    // );
 
-    client.onmessage = async (event) => {
-      let msg = JSON.parse(event.data);
+    client.open();
+
+    client.on('data', function message(data) {
+      // console.log('Data has been received');
+      // socketIo.emit("network-stats-data", data);
+      let msg = data;
       if (msg.action === "stats") {
         if (msg.data.id in test) {
           return;
@@ -21,7 +25,19 @@ export default class BLManager {
           nodes = Object.keys(test).length;
         }
       }
-    };
+    });
+
+    // client.onmessage = async (event) => {
+    //   let msg = JSON.parse(event.data);
+    //   if (msg.action === "stats") {
+    //     if (msg.data.id in test) {
+    //       return;
+    //     } else {
+    //       test[msg.data.id] = msg.data.stats.active;
+    //       nodes = Object.keys(test).length;
+    //     }
+    //   }
+    // };
     setTimeout(() => {
       obj = {
         nodes: nodes,
