@@ -8,4 +8,16 @@ export default class JobController {
       lhtWebLog('monitorMeter', 'Job Failed', err, 'developer', httpConstants.LOG_LEVEL_TYPE.ERROR)
     )
   }
+
+  static async updateUpTime () {
+    await BLManager.updateUpTime().catch((err) =>
+      lhtWebLog('monitorMeter', 'Job Failed', err, 'developer', httpConstants.LOG_LEVEL_TYPE.ERROR)
+    )
+  }
+
+  static async getGasPrice () {
+    await BLManager.getGasPrice().catch((err) =>
+      lhtWebLog('monitorMeter', 'Job Failed', err, 'developer', httpConstants.LOG_LEVEL_TYPE.ERROR)
+    )
+  }
 }

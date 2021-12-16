@@ -14,6 +14,8 @@ module.exports = (app) => {
     app.post('/node', new TestModule().addNode);
     app.get('/node', new TestModule().getNode);
     app.get('/test', new TestModule().testSocket);
+    app.get('/uptime/:day', new TestModule().getUpTime);
+    app.get('/getGasPrice', new TestModule().getGasPrice);
 
     // app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
 };

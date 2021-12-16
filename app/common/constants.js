@@ -69,8 +69,8 @@ export const apiSuccessMessage = {
   FETCH_SUCCESS: 'Information fetched successfully'
 }
 
-export const apiEndpoints = {
-  GET_METERS: '/get-meters'
+export const apiCoinMarket = {
+  GET_PRICE: 'https://pro-api.coinmarketcap.com/'
 }
 
 export const apiFailureMessage = {
