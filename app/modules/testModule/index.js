@@ -24,4 +24,18 @@ export default class Index {
     if (!getMetersRes) { return Utils.handleError(error, request, response) }
     return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
   }
+
+  async getUpTime (request, response) {
+    lhtWebLog('Inside getUpTime',  'getUpTime', request.params, 0, '')
+    const [error, getMetersRes] = await Utils.parseResponse(new BLManager().getUpTime(request.params.day))
+    if (!getMetersRes) { return Utils.handleError(error, request, response) }
+    return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
+  }
+
+  async getGasPrice (request, response) {
+    lhtWebLog('Inside getUpTime',  'getUpTime', request.body, 0, '')
+    const [error, getMetersRes] = await Utils.parseResponse(new BLManager().getGasPrice())
+    if (!getMetersRes) { return Utils.handleError(error, request, response) }
+    return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
+  }
 }

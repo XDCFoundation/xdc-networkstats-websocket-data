@@ -1,9 +1,15 @@
 import Node from "../../models/nodeHistory";
+import UpTime from "../../models/upTimeGraph";
+import HttpService from "../../service/http-service";
+import Config from "../../../config/index";
+import GasPrice from "../../models/gasPrice";
 
 const W3CWebSocket = require("websocket").w3cwebsocket;
 let test = {};
 let nodes = 0;
 let obj = {};
+let upTime = 0;
+let upObj = {};
 
 export default class BLManager {
   static async updateDailyActiveNodes() {
@@ -26,18 +32,6 @@ export default class BLManager {
         }
       }
     });
-
-    // client.onmessage = async (event) => {
-    //   let msg = JSON.parse(event.data);
-    //   if (msg.action === "stats") {
-    //     if (msg.data.id in test) {
-    //       return;
-    //     } else {
-    //       test[msg.data.id] = msg.data.stats.active;
-    //       nodes = Object.keys(test).length;
-    //     }
-    //   }
-    // };
     setTimeout(() => {
       obj = {
         nodes: nodes,
@@ -53,4 +47,55 @@ export default class BLManager {
     }, 20000);
     return true;
   }
+
+  static async updateUpTime () {
+    client.open();
+    client.on('data', function message(data) {
+      let msg = data;
+      if (msg.action === "stats") {
+        if (msg.data.id in test) {
+          return;
+        } else {
+          upTime = msg.data.stats.uptime;
+        }
+      }
+    });
+    setTimeout(() => {
+      upObj = {
+        upTime: upTime,
+        addedOn: Date.now(),
+      }
+      async function addUptime() {
+        const data = new UpTime(upObj);
+        const response = await data.saveData()
+        console.log("UpTime Added");
+      }
+      addUptime();
+      console.log("up", upObj);
+    },10000);
+    return true;
+  }
+
+  static async getGasPrice () {
+    try{
+      
+    let roleList = await HttpService.executeHTTPRequest("GET", "https://pro-api.coinmarketcap.com", `/v1/cryptocurrency/quotes/latest?symbol=ETH&CMC_PRO_API_KEY=cb190bb3-b61a-4d83-8559-374edbfb27b3`, {});
+    let obj = {
+      gasPrice: roleList,
+      addedOn: Date.now(),
+    }
+    async function addPrice() {
+      const data = new GasPrice(obj);
+      const response = await data.saveData()
+    }
+    addPrice();
+
+    console.log("role", roleList.data.ETH.quote);
+    console.log("working");
+  }
+
+catch(error){
+  console.log("error", error);
+} }
+
 }
