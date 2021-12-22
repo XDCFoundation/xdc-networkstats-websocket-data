@@ -18,5 +18,7 @@ module.exports = (app) => {
     app.get('/getGasPrice', new TestModule().getGasPrice);
     app.get('/getInit', new TestModule().getInit);
 
+    app.get('/get-table-nodes', new TestModule().getTableNodes);
+
     // app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
 };
