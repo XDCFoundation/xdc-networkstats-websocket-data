@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const socketDataSchema = new mongoose.Schema({
-    data: {type: Object, default: {}},
     nodes: {type: Object, default: {}},
     addedOn: {type: Number}
   })
