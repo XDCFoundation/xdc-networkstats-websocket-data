@@ -33,8 +33,15 @@ export default class Index {
   }
 
   async getGasPrice (request, response) {
-    lhtWebLog('Inside getUpTime',  'getUpTime', request.body, 0, '')
+    lhtWebLog('Inside getGasPrice',  'getGasPrice', request.body, 0, '')
     const [error, getMetersRes] = await Utils.parseResponse(new BLManager().getGasPrice())
+    if (!getMetersRes) { return Utils.handleError(error, request, response) }
+    return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
+  }
+
+  async getInit (request, response) {
+    lhtWebLog('Inside getNodesInit',  'getNodesInit', request.body, 0, '')
+    const [error, getMetersRes] = await Utils.parseResponse(new BLManager().getInit())
     if (!getMetersRes) { return Utils.handleError(error, request, response) }
     return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
   }

@@ -3,8 +3,9 @@ import UpTime from "../../models/upTimeGraph";
 import HttpService from "../../service/http-service";
 import Config from "../../../config/index";
 import GasPrice from "../../models/gasPrice";
+import Country from "../../models/socketData"
+import _ from "lodash";
 
-const W3CWebSocket = require("websocket").w3cwebsocket;
 let test = {};
 let nodes = 0;
 let obj = {};
@@ -97,5 +98,47 @@ export default class BLManager {
 catch(error){
   console.log("error", error);
 } }
+
+static async updateCountry () {
+    setInterval(()=>{
+      client.open();
+      client.on('init', function message(data) {
+      let country = [];
+      if(!_.isEmpty(data.nodes) && !_.isUndefined(data.nodes)){
+        _.forEach(data.nodes, function (node, index) { 
+          country.push({
+            loc: node.geo.country,
+          })
+        }); }
+        let hs = {};
+        let countryArray = [];
+        for (let i = 0; i < country.length; i++) {
+          if (hs.hasOwnProperty(country[i].loc)) {
+            hs[country[i].loc] = hs[country[i].loc] + 1;
+          } else {
+            hs[country[i].loc] = 1;
+          }
+        }
+        for (const [key, value] of Object.entries(hs)) {
+          countryArray.push({
+            country: key,
+            count: value,
+          });
+        }
+        let obj = {
+        data: data,
+        nodes: countryArray,
+        addedOn: Date.now(),
+        }
+        async function addNodes() {
+          const data = new Country(obj);
+          const response = await data.saveData()
+        }
+        addNodes();
+      })
+    }, 50000)
+    
+    
+}
 
 }

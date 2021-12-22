@@ -21,7 +21,7 @@ export default class NetworkStatsManager{
 
         client.on('data', function message(data) {
             // console.log('Data has been received', data);
-            socketIo.emit("network-stats-data", data);
+             socketIo.emit("network-stats-data", data);
         });
 
         client.on('init', function message(data) {

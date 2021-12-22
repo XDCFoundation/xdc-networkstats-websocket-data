@@ -12,14 +12,14 @@ module.exports = new CronMasterJob({
 
   timeThreshold: (5 * 60 * 1000),
   meta: {
-    name: 'job to save ongoing metering of meters in DB',
+    name: 'job to update active nodes in DB',
     requestID: ''
   },
   cronParams: {
-    cronTime: '55 23 * * *',
+    cronTime: '0 * * * *',
     onTick: async (job, done) => {
       Utils.lhtLog('cron jobs', 'cron job running', {}, '', httpConstants.LOG_LEVEL_TYPE.INFO)
-      // await JobController.monitorMeter()
+      await JobController.updateCountry();
       done(null, 'ok')
     }
   }
