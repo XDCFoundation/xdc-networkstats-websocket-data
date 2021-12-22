@@ -91,8 +91,6 @@ export default class BLManager {
     }
     addPrice();
 
-    console.log("role", roleList.data.ETH.quote);
-    console.log("working");
   }
 
 catch(error){
@@ -126,7 +124,6 @@ static async updateCountry () {
           });
         }
         let obj = {
-        data: data,
         nodes: countryArray,
         addedOn: Date.now(),
         }
