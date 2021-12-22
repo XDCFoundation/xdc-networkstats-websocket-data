@@ -6,6 +6,7 @@ import Nodes from "../../models/socketData";
 import _ from "lodash";
 
 import { apiFailureMessage, httpConstants } from "../../common/constants";
+import InitNodes from "../../models/initNodes";
 
 const sortJsonArray = require("sort-json-array");
 const W3CWebSocket = require("websocket").w3cwebsocket;
@@ -151,4 +152,11 @@ export default class Manger {
     }
     return output;
   };
+
+  getTableNodes = async () => {
+    const nodeData = await InitNodes.findLatestObject();
+    console.log("nodeData =====", nodeData);
+    return nodeData;
+  }
+
 }
