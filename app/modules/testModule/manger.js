@@ -105,10 +105,14 @@ export default class Manger {
     let last24Data = [];
     let arr7D = [];
     let last7Data = [];
-    const nodesData = await Nodes.findData();
+    // const n = await Nodes.findData();
+    // const nodesData = await Nodes.findData({"addedOn": -1});
+    console.log("weufywufhwekjdhawek ksadhfaksjhdf====sdbc bdns-----");
+    const nodesData = await Nodes.findObjectsInDescendingOrder();
+    // console.log("nodesData =====", nodesData);
     const data = nodesData;
-    sortJsonArray(data, "addedOn", "des");
-    
+    // sortJsonArray(data, "addedOn", "des");
+
     arr24 = data.slice(0, 24);
     let avgObj = {};
     for (let i = 0; i < arr24.length; i++) {
@@ -128,7 +132,7 @@ export default class Manger {
       });
     }
 
-    arr7D = data.slice(0, 168);
+    arr7D = data;
     let avgObj2 = {};
     for (let i = 0; i < arr7D.length; i++) {
       for (let j = 0; j < arr7D[i].nodes.length; j++) {
