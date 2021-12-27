@@ -25,10 +25,10 @@ export default class NetworkStatsManager{
              socketIo.emit("network-stats-data", data);
         });
 
-        client.on('init', async function message(data) {
+        client.on('init', function message(data) {
             let initNodeData = new InitNodes(data);
             initNodeData.nodesId = initNodeData._id;
-            await initNodeData.saveData();
+            initNodeData.saveData();
             socketIo.emit("network-stats-nodes", data);
             console.log('INIT INIT INIT INIT INIT INIT INIT INIT INIT =1=1=1=1=1=1=1=1=1', new Date());
         });

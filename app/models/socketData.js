@@ -26,6 +26,9 @@ const socketDataSchema = new mongoose.Schema({
     },
     findDataWithAggregate: function (findObj) {
       return this.aggregate(findObj)
+    },
+    findObjectsInDescendingOrder: function(){
+      return this.find({}).sort({ _id: -1 }).limit(168);
     }
   })
   export default mongoose.model('socket-data', socketDataSchema)
