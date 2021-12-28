@@ -3,9 +3,8 @@ import UpTime from "../../models/upTimeGraph";
 import Utils from "../../utils";
 import GasPrice from "../../models/gasPrice";
 import Nodes from "../../models/socketData";
-import _ from "lodash";
 
-import { apiFailureMessage, httpConstants } from "../../common/constants";
+import {apiFailureMessage, httpConstants} from "../../common/constants";
 import InitNodes from "../../models/initNodes";
 
 const sortJsonArray = require("sort-json-array");
@@ -21,10 +20,11 @@ export default class Manger {
   };
 
   getNode = async () => {
-    const nodeData = await Node.findData();
-    const data = nodeData;
-    sortJsonArray(data, "addedOn", "des");
-    return data.slice(0, 7);
+    // const nodeData = await Node.findData();
+    // const data = nodeData;
+    // sortJsonArray(data, "addedOn", "des");
+    // return data.slice(0, 7);
+    return await Node.findDataWithLimitInDecreasingOrder(7);
   };
 
   testSocket = async () => {
@@ -56,9 +56,9 @@ export default class Manger {
     let val = 24 * day;
     let time = [];
     let uptime = [];
-    const upTimeData = await UpTime.findData();
+    const upTimeData = await UpTime.findDataWithLimitInDecreasingOrder(1000);
     const data = upTimeData;
-    sortJsonArray(data, "addedOn", "des");
+    // sortJsonArray(data, "addedOn", "des");
     if (day == 1) {
       return data.slice(0, val);
     } else if (day == 7) {
@@ -94,10 +94,11 @@ export default class Manger {
   };
 
   getGasPrice = async () => {
-    const nodeData = await GasPrice.findData();
-    const data = nodeData;
-    sortJsonArray(data, "addedOn", "des");
-    return data.slice(0, 1);
+    // const nodeData = await GasPrice.findData();
+    // const data = nodeData;
+    // sortJsonArray(data, "addedOn", "des");
+    // return data.slice(0, 1);
+    return await GasPrice.findDataWithLimitInDecreasingOrder(1);
   };
 
   getInit = async () => {
