@@ -107,9 +107,7 @@ export default class Manger {
     let last7Data = [];
     // const n = await Nodes.findData();
     // const nodesData = await Nodes.findData({"addedOn": -1});
-    console.log("weufywufhwekjdhawek ksadhfaksjhdf====sdbc bdns-----");
     const nodesData = await Nodes.findObjectsInDescendingOrder();
-    // console.log("nodesData =====", nodesData);
     const data = nodesData;
     // sortJsonArray(data, "addedOn", "des");
 
