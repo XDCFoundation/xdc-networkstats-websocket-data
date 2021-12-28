@@ -14,6 +14,9 @@ const nodeHistorySchema = new mongoose.Schema({
     findData: function (findObj) {
       return this.find(findObj)
     },
+    findDataWithLimitInDecreasingOrder: function (limit) {
+      return this.find().sort({ addedOn: -1 }).limit(limit)
+    },
     findOneData: function (findObj) {
       return this.findOne(findObj)
     },
