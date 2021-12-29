@@ -1,3 +1,4 @@
+import InitNodes from "../../models/initNodes";
 export default class NetworkStatsManager{
     static async listenNodes(socketIo){
         client.open();
@@ -21,12 +22,15 @@ export default class NetworkStatsManager{
 
         client.on('data', function message(data) {
             // console.log('Data has been received', data);
-            socketIo.emit("network-stats-data", data);
+             socketIo.emit("network-stats-data", data);
         });
 
-        client.on('init', function message(data) {
+        client.on('init', async function message(data) {
+            let initNodeData = new InitNodes(data);
+            initNodeData.nodesId = initNodeData._id;
+            await initNodeData.saveData();
             socketIo.emit("network-stats-nodes", data);
-            console.log('INIT INIT INIT INIT INIT INIT INIT INIT INIT =1=1=1=1=1=1=1=1=1', typeof data, new Date());
+            console.log('INIT INIT INIT INIT INIT INIT INIT INIT INIT =1=1=1=1=1=1=1=1=1', new Date());
         });
 
         client.on('client-latency', function(data)

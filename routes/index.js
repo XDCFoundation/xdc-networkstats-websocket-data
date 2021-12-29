@@ -16,6 +16,9 @@ module.exports = (app) => {
     app.get('/test', new TestModule().testSocket);
     app.get('/uptime/:day', new TestModule().getUpTime);
     app.get('/getGasPrice', new TestModule().getGasPrice);
+    app.get('/getInit', new TestModule().getInit);
+
+    app.get('/get-table-nodes', new TestModule().getTableNodes);
 
     // app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
 };

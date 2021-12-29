@@ -1,21 +1,18 @@
 const mongoose = require('mongoose')
 
-const gasPriceSchema = new mongoose.Schema({
-    gasPrice: {type: Object, default: {}},
+const socketDataSchema = new mongoose.Schema({
+    nodes: {type: Object, default: {}},
     addedOn: {type: Number}
   })
    
-  gasPriceSchema.method({
+  socketDataSchema.method({
     saveData: async function () {
       return this.save()
     }
   })
-  gasPriceSchema.static({
+  socketDataSchema.static({
     findData: function (findObj) {
       return this.find(findObj)
-    },
-    findDataWithLimitInDecreasingOrder: function (limit) {
-      return this.find().sort({ addedOn: -1 }).limit(limit)
     },
     findOneData: function (findObj) {
       return this.findOne(findObj)
@@ -29,6 +26,9 @@ const gasPriceSchema = new mongoose.Schema({
     },
     findDataWithAggregate: function (findObj) {
       return this.aggregate(findObj)
+    },
+    findObjectsInDescendingOrder: function(){
+      return this.find({}).sort({ _id: -1 }).limit(168);
     }
   })
-  export default mongoose.model('gas-price', gasPriceSchema)
+  export default mongoose.model('socket-data', socketDataSchema)
