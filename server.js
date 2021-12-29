@@ -45,15 +45,9 @@ class Server {
         NetworkStatsController.listenNodes(socketIo);
 
         setInterval(()=>{
-
           if(global.primusDataNode){
-
             socketIo.emit("network-stats-data", primusDataNode);
-
-            console.log("test test test test", primusDataNode);
-
           }
-
         },1000)
 
 
