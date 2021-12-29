@@ -98,44 +98,49 @@ catch(error){
 } }
 
 static async updateCountry () {
-    setInterval(()=>{
-      client.open();
-      client.on('init', function message(data) {
-      let country = [];
-      if(!_.isEmpty(data.nodes) && !_.isUndefined(data.nodes)){
-        _.forEach(data.nodes, function (node, index) { 
-          country.push({
-            loc: node.geo.country,
-          })
-        }); }
-        let hs = {};
-        let countryArray = [];
-        for (let i = 0; i < country.length; i++) {
-          if (hs.hasOwnProperty(country[i].loc)) {
-            hs[country[i].loc] = hs[country[i].loc] + 1;
-          } else {
-            hs[country[i].loc] = 1;
+    try {
+      setInterval(()=>{
+        client.open();
+        client.on('init', function message(data) {
+        let country = [];
+        if(!_.isEmpty(data.nodes) && !_.isUndefined(data.nodes)){
+          _.forEach(data.nodes, function (node, index) {
+            if(node.geo!==null && typeof node.geo!=='undefined'){
+            country.push({
+              loc: node.geo.country,
+            }) }
+          }); }
+          let hs = {};
+          let countryArray = [];
+          for (let i = 0; i < country.length; i++) {
+            if (hs.hasOwnProperty(country[i].loc)) {
+              hs[country[i].loc] = hs[country[i].loc] + 1;
+            } else {
+              hs[country[i].loc] = 1;
+            }
           }
-        }
-        for (const [key, value] of Object.entries(hs)) {
-          countryArray.push({
-            country: key,
-            count: value,
-          });
-        }
-        let obj = {
-        nodes: countryArray,
-        addedOn: Date.now(),
-        }
-        async function addNodes() {
-          const data = new Country(obj);
-          const response = await data.saveData()
-        }
-        addNodes();
-      })
-    }, 50000)
-    
-    
+          for (const [key, value] of Object.entries(hs)) {
+            countryArray.push({
+              country: key,
+              count: value,
+            });
+          }
+          let obj = {
+          nodes: countryArray,
+          addedOn: Date.now(),
+          }
+          async function addNodes() {
+            const data = new Country(obj);
+            const response = await data.saveData()
+          }
+          addNodes();
+        })
+      }, 50000)
+
+      
+    } catch (error) {
+      console.log("error----------", error);
+    }
 }
 
 }
