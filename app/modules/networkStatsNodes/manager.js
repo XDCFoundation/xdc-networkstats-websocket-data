@@ -22,8 +22,13 @@ export default class NetworkStatsManager{
 
         client.on('data', function message(data) {
             // console.log('Data has been received', data);
-            //  socketIo.emit("network-stats-data", data);
-            global.primusDataNode = data;
+            if(data.action==='charts') {
+                console.log("chart received");
+                socketIo.emit("network-stats-data", data);
+            }
+             else {
+                global.primusDataNode = data; 
+            }
         });
 
         client.on('init', async function message(data) {
