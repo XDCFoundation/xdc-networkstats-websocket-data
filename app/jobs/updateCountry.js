@@ -16,7 +16,7 @@ module.exports = new CronMasterJob({
     requestID: ''
   },
   cronParams: {
-    cronTime: '0 * * * *',
+    cronTime: '0 0 * * * *',
     onTick: async (job, done) => {
       Utils.lhtLog('cron jobs', 'cron job running', {}, '', httpConstants.LOG_LEVEL_TYPE.INFO)
       await JobController.updateCountry();

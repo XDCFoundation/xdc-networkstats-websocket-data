@@ -23,7 +23,6 @@ export default class NetworkStatsManager{
         client.on('data', function message(data) {
             // console.log('Data has been received', data);
             if(data.action==='charts') {
-                console.log("chart received");
                 socketIo.emit("network-stats-data", data);
             }
              else {
@@ -32,11 +31,11 @@ export default class NetworkStatsManager{
         });
 
         client.on('init', async function message(data) {
+            global.initData = data;
             let initNodeData = new InitNodes(data);
             initNodeData.nodesId = initNodeData._id;
             await initNodeData.saveData();
             socketIo.emit("network-stats-nodes", data);
-            console.log('INIT INIT INIT INIT INIT INIT INIT INIT INIT =1=1=1=1=1=1=1=1=1', new Date());
         });
 
         client.on('client-latency', function(data)

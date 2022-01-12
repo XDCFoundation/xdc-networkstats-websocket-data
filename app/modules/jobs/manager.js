@@ -99,12 +99,10 @@ catch(error){
 
 static async updateCountry () {
     try {
-      setInterval(()=>{
-        client.open();
-        client.on('init', function message(data) {
+        if(global.initData){
         let country = [];
-        if(!_.isEmpty(data.nodes) && !_.isUndefined(data.nodes)){
-          _.forEach(data.nodes, function (node, index) {
+        if(!_.isEmpty(initData.nodes) && !_.isUndefined(initData.nodes)){
+          _.forEach(initData.nodes, function (node, index) {
             if(node.geo!==null && typeof node.geo!=='undefined'){
             country.push({
               loc: node.geo.country,
@@ -134,10 +132,7 @@ static async updateCountry () {
             const response = await data.saveData()
           }
           addNodes();
-        })
-      }, 50000)
-
-      
+        }
     } catch (error) {
       console.log("error----------", error);
     }
