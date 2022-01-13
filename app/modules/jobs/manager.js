@@ -79,8 +79,9 @@ export default class BLManager {
 
   static async getGasPrice () {
     try{
-      
-    let roleList = await HttpService.executeHTTPRequest("GET", "https://pro-api.coinmarketcap.com", `/v1/cryptocurrency/quotes/latest?symbol=ETH&CMC_PRO_API_KEY=cb190bb3-b61a-4d83-8559-374edbfb27b3`, {});
+    const headers = {"content-type": "application/json"};
+    let roleList = await HttpService.executeHTTPRequest("GET", "http://pro-api.coinmarketcap.com", `/v1/cryptocurrency/quotes/latest?symbol=ETH&CMC_PRO_API_KEY=cb190bb3-b61a-4d83-8559-374edbfb27b3`, {}, headers);
+    if( typeof roleList!== 'string') {
     let obj = {
       gasPrice: roleList,
       addedOn: Date.now(),
@@ -90,7 +91,7 @@ export default class BLManager {
       const response = await data.saveData()
     }
     addPrice();
-
+  }
   }
 
 catch(error){
