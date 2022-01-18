@@ -28,6 +28,10 @@ export default class NetworkStatsManager{
              else {
                 global.primusDataNode = data; 
             }
+
+            if(data.action === 'block'){
+                global.primusDataBlock = data;
+            }
         });
 
         client.on('init', async function message(data) {
