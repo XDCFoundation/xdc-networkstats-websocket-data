@@ -50,7 +50,11 @@ class Server {
           }
         },1000)
 
-
+        setInterval(()=>{
+          if(global.primusDataBlock){
+            socketIo.emit("network-stats-data", primusDataBlock);
+          }
+        },100)
 
 
       Utils.lhtLog('listen', `Server Started on port ${Config.PORT}`)
