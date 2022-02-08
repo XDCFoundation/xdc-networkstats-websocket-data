@@ -14,24 +14,14 @@ let upObj = {};
 
 export default class BLManager {
   static async updateDailyActiveNodes() {
-    // const client = new W3CWebSocket(
-    //   "wss://stats1.xinfin.network/primus/?_primuscb=1633499928674-0"
-    // );
-
     client.open();
-
-    client.on('data', function message(data) {
-      // console.log('Data has been received');
-      // socketIo.emit("network-stats-data", data);
+    client.on('init', function message(data) {
       let msg = data;
-      if (msg.action === "stats") {
-        if (msg.data.id in test) {
-          return;
-        } else {
-          test[msg.data.id] = msg.data.stats.active;
-          nodes = Object.keys(test).length;
-        }
-      }
+      if(!_.isEmpty(msg.nodes) && !_.isUndefined(msg.nodes)){
+      nodes = _.filter(msg.nodes, function (node) {
+        return node.stats.active === true;
+      }).length;
+    }
     });
     setTimeout(() => {
       obj = {
@@ -80,7 +70,7 @@ export default class BLManager {
   static async getGasPrice () {
     try{
     const headers = {"content-type": "application/json"};
-    let roleList = await HttpService.executeHTTPRequest("GET", "http://pro-api.coinmarketcap.com", `/v1/cryptocurrency/quotes/latest?symbol=ETH&CMC_PRO_API_KEY=cb190bb3-b61a-4d83-8559-374edbfb27b3`, {}, headers);
+    let roleList = await HttpService.executeHTTPRequest("GET", "http://pro-api.coinmarketcap.com", `/v1/cryptocurrency/quotes/latest?symbol=XDC&CMC_PRO_API_KEY=cb190bb3-b61a-4d83-8559-374edbfb27b3`, {}, headers);
     if( typeof roleList!== 'string') {
     let obj = {
       gasPrice: roleList,
