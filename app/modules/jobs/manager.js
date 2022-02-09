@@ -14,15 +14,14 @@ let upObj = {};
 
 export default class BLManager {
   static async updateDailyActiveNodes() {
-    client.open();
-    client.on('init', function message(data) {
-      let msg = data;
-      if(!_.isEmpty(msg.nodes) && !_.isUndefined(msg.nodes)){
-      nodes = _.filter(msg.nodes, function (node) {
+      if(global.initData){
+      let value = initData;
+      if(!_.isEmpty(value.nodes) && !_.isUndefined(value.nodes)){
+      nodes = _.filter(value.nodes, function (node) {
         return node.stats.active === true;
       }).length;
     }
-    });
+  }
     setTimeout(() => {
       obj = {
         nodes: nodes,
