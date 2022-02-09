@@ -6,6 +6,7 @@ import Nodes from "../../models/socketData";
 
 import {apiFailureMessage, httpConstants} from "../../common/constants";
 import InitNodes from "../../models/initNodes";
+import HTTPService from "../../service/http-service";
 
 const sortJsonArray = require("sort-json-array");
 const W3CWebSocket = require("websocket").w3cwebsocket;
@@ -160,6 +161,14 @@ export default class Manger {
     const nodeData = await InitNodes.findLatestObject();
     console.log("nodeData =====", nodeData);
     return nodeData;
+  }
+
+  getEthPrice = async () => {
+    const headers = {"content-type": "application/json"};
+    let roleList = await HTTPService.executeHTTPRequest("GET", "https://ethgas.watch", `/api/gas`, {}, headers);
+    if( typeof roleList!== 'string') {
+      return roleList;
+    }
   }
 
 }
