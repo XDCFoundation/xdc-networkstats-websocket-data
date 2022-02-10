@@ -3,6 +3,7 @@ import UpTime from "../../models/upTimeGraph";
 import HttpService from "../../service/http-service";
 import Config from "../../../config/index";
 import GasPrice from "../../models/gasPrice";
+import EthPrice from "../../models/ethPrice";
 import Country from "../../models/socketData"
 import _ from "lodash";
 
@@ -127,5 +128,30 @@ static async updateCountry () {
       console.log("error----------", error);
     }
 }
+
+
+static async getEthPrice () {
+  try{
+  const headers = {"content-type": "application/json"};
+  let roleList = await HttpService.executeHTTPRequest("GET", "http://ethgas.watch", `/api/gas`, {}, headers);
+  if( typeof roleList!== 'string') {
+  let obj = {
+    ethPrice: roleList,
+    addedOn: Date.now(),
+  }
+
+  console.log("ethhhh", obj);
+  async function addPrice() {
+    const data = new EthPrice(obj);
+    const response = await data.saveData()
+  }
+  addPrice();
+}
+}
+
+catch(error){
+console.log("error", error);
+} }
+
 
 }

@@ -2,6 +2,7 @@ import Node from "../../models/nodeHistory";
 import UpTime from "../../models/upTimeGraph";
 import Utils from "../../utils";
 import GasPrice from "../../models/gasPrice";
+import EthPrice from "../../models/ethPrice";
 import Nodes from "../../models/socketData";
 
 import {apiFailureMessage, httpConstants} from "../../common/constants";
@@ -164,11 +165,7 @@ export default class Manger {
   }
 
   getEthPrice = async () => {
-    const headers = {"content-type": "application/json"};
-    let roleList = await HTTPService.executeHTTPRequest("GET", "https://ethgas.watch", `/api/gas`, {}, headers);
-    if( typeof roleList!== 'string') {
-      return roleList;
-    }
-  }
+    return await EthPrice.findDataWithLimitInDecreasingOrder(1);
+  };
 
 }
