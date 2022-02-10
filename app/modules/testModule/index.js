@@ -57,6 +57,11 @@ export default class Index {
     lhtWebLog('Inside getEthPrice',  'getEthPrice', request.body, 0, '')
     const [error, getMetersRes] = await Utils.parseResponse(new BLManager().getEthPrice())
     if (!getMetersRes) { return Utils.handleError(error, request, response) }
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
   }
 }
