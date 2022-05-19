@@ -64,4 +64,11 @@ export default class Index {
     );
     return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
   }
+
+  async getTransactions (request, response) {
+    lhtWebLog('Inside getTransacions',  'getTransacions', request.body, 0, '')
+    const [error, getMetersRes] = await Utils.parseResponse(new BLManager().getTransactions())
+    if (!getMetersRes) { return Utils.handleError(error, request, response) }
+    return Utils.response(response, getMetersRes, apiSuccessMessage.FETCH_SUCCESS, httpConstants.RESPONSE_STATUS.SUCCESS, httpConstants.RESPONSE_CODES.OK)
+  }
 }

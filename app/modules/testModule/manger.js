@@ -164,6 +164,12 @@ export default class Manger {
     return nodeData;
   }
 
+  getTransactions = async () => {
+    if(global.primusDataCharts) {
+      return primusDataCharts.data.transactions;
+    }
+  }
+
   getEthPrice = async () => {
     return await EthPrice.findDataWithLimitInDecreasingOrder(1);
   };
