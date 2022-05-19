@@ -19,6 +19,7 @@ module.exports = (app) => {
     app.get('/getInit', new TestModule().getInit);
     app.get('/get-table-nodes', new TestModule().getTableNodes);
     app.get('/get-eth-price', new TestModule().getEthPrice);
+    app.get('/getTransactions', new TestModule().getTransactions);
 
     // app.get("/test-route", ValidationManger.validateUserLogin, new TestModule().testRoute);
 };

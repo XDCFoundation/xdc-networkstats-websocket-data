@@ -32,6 +32,10 @@ export default class NetworkStatsManager{
             if(data.action === 'block'){
                 global.primusDataBlock = data;
             }
+            
+            if(data.action === 'charts') {
+                global.primusDataCharts = data;
+            }
         });
 
         client.on('init', async function message(data) {
